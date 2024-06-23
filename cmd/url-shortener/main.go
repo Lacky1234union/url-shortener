@@ -18,6 +18,7 @@ import (
 	mwLogger "url-shortener/internal/http-server/middleware/logger"
 	"url-shortener/internal/lib/logger/handlers/slogpretty"
 	"url-shortener/internal/lib/logger/sl"
+	eventsender "url-shortener/internal/services/event-sender"
 	"url-shortener/internal/storage/sqlite"
 )
 
@@ -76,6 +77,9 @@ func main() {
 		WriteTimeout: cfg.HTTPServer.Timeout,
 		IdleTimeout:  cfg.HTTPServer.IdleTimeout,
 	}
+
+	sender := eventsender.New(storage, log)
+	sender.StartProcessEvents(context.Background(), 5*time.Second)
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
