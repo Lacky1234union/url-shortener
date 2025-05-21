@@ -7,18 +7,18 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"url-shortener/internal/config"
+	"url-shortener/internal/http-server/handlers/redirect"
+	"url-shortener/internal/http-server/handlers/url/save"
+	"url-shortener/internal/lib/logger/handlers/slogpretty"
+	"url-shortener/internal/lib/logger/sl"
+	"url-shortener/internal/storage/sqlite"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"golang.org/x/exp/slog"
 
-	"url-shortener/internal/config"
-	"url-shortener/internal/http-server/handlers/redirect"
-	"url-shortener/internal/http-server/handlers/url/save"
 	mwLogger "url-shortener/internal/http-server/middleware/logger"
-	"url-shortener/internal/lib/logger/handlers/slogpretty"
-	"url-shortener/internal/lib/logger/sl"
-	"url-shortener/internal/storage/sqlite"
 )
 
 const (
